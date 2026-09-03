@@ -272,12 +272,13 @@
         defaultOption.value = "";
         defaultOption.textContent = "-- Pilih Kode & Deskripsi --";
         select.appendChild(defaultOption);
-        
+
+        // Cukup satu kali perulangan yang lengkap dengan vendor dan harga
         list.forEach(item => {
           const kode = String(item.kode ?? "");
           const deskripsi = String(item.deskripsi ?? "");
-          const vendor = String(item.vendor ?? "-");
           const harga = Number(item.harga) || 0;
+          const vendor = String(item.vendor ?? "-"); 
           const option = document.createElement("option");
 
           option.value = kode;
@@ -292,6 +293,7 @@
         console.error(error);
       }
     }
+    
     async function loadUnits() {
       const loader = document.getElementById("unitLoading");
       const select = document.getElementById("dropdownUnit");
