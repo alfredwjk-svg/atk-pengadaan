@@ -284,6 +284,19 @@
           select.appendChild(option);
         });
 
+        list.forEach(item => {
+          const kode = String(item.kode ?? "");
+          const deskripsi = String(item.deskripsi ?? "");
+          const harga = Number(item.harga) || 0;
+          const vendor = String(item.vendor ?? "-"); // Mengambil nama vendor
+          const option = document.createElement("option");
+
+          option.value = kode;
+          // Format tampilan dropdown: Kode - Deskripsi (Vendor: Nama Vendor | Rp Harga)
+          option.textContent = `${kode} - ${deskripsi} [Vendor: ${vendor}] (Rp ${harga.toLocaleString("id-ID")})`;
+          select.appendChild(option);
+        });
+
         loader.style.display = "none";
         select.style.display = "block";
       } catch (error) {
