@@ -855,6 +855,49 @@
         button.textContent = "📥 Unduh Berkas Excel Multi-Tab (.xlsx)";
       }
     }
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Mencegah Chrome menampilkan *mini-infobar* otomatis
+      e.preventDefault();
+      // Simpan event agar bisa dipicu nanti
+      deferredPrompt = e;
+      
+      // Tampilkan tombol Install kustom Anda
+      const installBtn = document.getElementById('btnInstallPWA');
+      if (installBtn) {
+        installBtn.style.display = 'block';
+      }
+    });
+
+    document.getElementById('btnInstallPWA')?.addEventListener('click', async () => {
+      const installBtn = document.getElementById('btnInstallPWA');
+      if (!deferredPrompt) return;
+      
+      // Tampilkan prompt instalasi bawaan browser
+      deferredPrompt.prompt();
+      
+      // Tunggu respons pilihan pengguna
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('Pengguna menyetujui instalasi PWA');
+      }
+      
+      // Prompt hanya bisa digunakan sekali, bersihkan variabel
+      deferredPrompt = null;
+      if (installBtn) {
+        installBtn.style.display = 'none';
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA berhasil diinstal!');
+      const installBtn = document.getElementById('btnInstallPWA');
+      if (installBtn) {
+        installBtn.style.display = 'none';
+      }
+      deferredPrompt = null;
+    });
   </script>
   <button id="btnInstallPWA" type="button">📲 Install Aplikasi Fleet</button>
 </body>
