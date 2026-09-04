@@ -751,17 +751,19 @@
           "Mengetahui,"           // Kolom I
           ]);
         
-        // Baris kosong untuk ruang tanda tangan fisik
-        rows.push([]);
-        rows.push([]);
+      // Tambahkan baris kosong dengan jumlah kolom yang sama agar struktur tabel konsisten
+rows.push(["", "", "", "", "", "", "", "", ""]);
+rows.push(["", "", "", "", "", "", "", "", ""]);
+rows.push([
+  "", 
+  "( ____________________ )", 
+  "", "", "", "", "", "", 
+  "( ____________________ )"
+]);
 
-        // Baris nama penanda tangan di bawah ruang kosong
-        rows.push([
-          "( ____________________ )",  // Kiri
-          "", "", "", "",
-          "", "", "",
-          "( ____________________ )"   // Kanan
-        ]);
+// Jalankan ini setelah worksheet dibuat untuk menyembunyikan semua garis kotak Excel
+worksheet['!views'] = [{ showGridLines: false }];
+
         
         const worksheet = XLSX.utils.aoa_to_sheet(rows);
 
