@@ -743,46 +743,29 @@
           `* Berkas gabungan sah digunakan sebagai bukti fisik penggunaan anggaran unit kerja. Dicetak otomatis pada tanggal: ${currentDate}`
         ]);
 
-       rows.push([
-          "",                     // Kolom A (Sekarang Kosong)
-          "Disusun oleh,",        // Kolom B
-          "", "", "", "",         // Kolom C, D, E, F (Spasi kosong)
-          "", "",                 // Kolom G, H (Spasi kosong)
-          "Mengetahui,"           // Kolom I
-          ]);
+      // Spasi kosong sebelum area tanda tangan
+        rows.push([]);
         
-     // 1. Masukkan baris-baris tersebut ke dalam array rows seperti biasa
-rows.push(["", "", "", "", "", "", "", "", ""]); // Baris kosong 1 (disesuaikan jumlah kolomnya)
-rows.push(["", "", "", "", "", "", "", "", ""]); // Baris kosong 2
-
-rows.push([
-  "",                          // Kolom A kosong
-  "( ____________________ )",  // Kolom B (Sesuai request sebelumnya)
-  "", "", "", "", 
-  "", "", 
-  "( ____________________ )"   // Kolom I
-]);
-
-// 2. SETELAH array rows dimasukkan ke worksheet (misal: worksheet.addRows(rows)),
-// Jalankan perulangan ini untuk menghapus border di 3 baris terakhir:
-
-const totalRows = worksheet.rowCount; // Ambil total baris saat ini
-
-// Loop untuk 3 baris terakhir (2 baris kosong + 1 baris nama)
-for (let i = totalRows - 2; i <= totalRows; i++) {
-  const row = worksheet.getRow(i);
-  row.eachCell({ includeEmpty: true }, (cell) => {
-    cell.border = {
-      top: { style: 'none' },
-      left: { style: 'none' },
-      bottom: { style: 'none' },
-      right: { style: 'none' }
-    };
-  });
-}
-
-
+        // Baris Tanda Tangan: Kiri (Disusun oleh), Kanan (Mengetahui)
+        rows.push([
+          "Disusun oleh,",        // Kolom A (Kiri)
+          "", "", "", "",         // Spasi kosong antar kolom
+          "", "", "",             // Spasi kosong antar kolom
+          "Mengetahui,"           // Kolom I / J (Kanan)
+        ]);
         
+        // Baris kosong untuk ruang tanda tangan fisik
+        rows.push([]);
+        rows.push([]);
+
+        // Baris nama penanda tangan di bawah ruang kosong
+        rows.push([
+          "( ____________________ )",  // Kiri
+          "", "", "", "",
+          "", "", "",
+          "( ____________________ )"   // Kanan
+        ]);
+
         const worksheet = XLSX.utils.aoa_to_sheet(rows);
 
         applyExcelStyles(worksheet, rows);
