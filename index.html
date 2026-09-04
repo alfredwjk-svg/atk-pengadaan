@@ -743,6 +743,28 @@
           `* Berkas gabungan sah digunakan sebagai bukti fisik penggunaan anggaran unit kerja. Dicetak otomatis pada tanggal: ${currentDate}`
         ]);
 
+      rows.push([]);
+        
+        // Baris Tanda Tangan: Kiri (Disusun oleh), Kanan (Mengetahui)
+        rows.push([
+          "Disusun oleh,",        // Kolom A (Kiri)
+          "", "", "", "",         // Spasi kosong antar kolom
+          "", "", "",             // Spasi kosong antar kolom
+          "Mengetahui,"           // Kolom I / J (Kanan)
+        ]);
+        
+        // Baris kosong untuk ruang tanda tangan fisik
+        rows.push([]);
+        rows.push([]);
+
+        // Baris nama penanda tangan di bawah ruang kosong
+        rows.push([
+          "( ____________________ )",  // Kiri
+          "", "", "", "",
+          "", "", "",
+          "( ____________________ )"   // Kanan
+        ]);
+        
         const worksheet = XLSX.utils.aoa_to_sheet(rows);
 
         applyExcelStyles(worksheet, rows);
