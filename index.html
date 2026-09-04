@@ -751,18 +751,36 @@
           "Mengetahui,"           // Kolom I
           ]);
         
-      // Tambahkan baris kosong dengan jumlah kolom yang sama agar struktur tabel konsisten
-rows.push(["", "", "", "", "", "", "", "", ""]);
-rows.push(["", "", "", "", "", "", "", "", ""]);
+     // 1. Masukkan baris-baris tersebut ke dalam array rows seperti biasa
+rows.push(["", "", "", "", "", "", "", "", ""]); // Baris kosong 1 (disesuaikan jumlah kolomnya)
+rows.push(["", "", "", "", "", "", "", "", ""]); // Baris kosong 2
+
 rows.push([
-  "", 
-  "( ____________________ )", 
-  "", "", "", "", "", "", 
-  "( ____________________ )"
+  "",                          // Kolom A kosong
+  "( ____________________ )",  // Kolom B (Sesuai request sebelumnya)
+  "", "", "", "", 
+  "", "", 
+  "( ____________________ )"   // Kolom I
 ]);
 
-// Jalankan ini setelah worksheet dibuat untuk menyembunyikan semua garis kotak Excel
-worksheet['!views'] = [{ showGridLines: false }];
+// 2. SETELAH array rows dimasukkan ke worksheet (misal: worksheet.addRows(rows)),
+// Jalankan perulangan ini untuk menghapus border di 3 baris terakhir:
+
+const totalRows = worksheet.rowCount; // Ambil total baris saat ini
+
+// Loop untuk 3 baris terakhir (2 baris kosong + 1 baris nama)
+for (let i = totalRows - 2; i <= totalRows; i++) {
+  const row = worksheet.getRow(i);
+  row.eachCell({ includeEmpty: true }, (cell) => {
+    cell.border = {
+      top: { style: 'none' },
+      left: { style: 'none' },
+      bottom: { style: 'none' },
+      right: { style: 'none' }
+    };
+  });
+}
+
 
         
         const worksheet = XLSX.utils.aoa_to_sheet(rows);
